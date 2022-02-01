@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-const widgetName = 'tracardi-uix-your-name'
-const widgetDivs = document.querySelectorAll('.'+widgetName)
+const widgetDivs = document.querySelectorAll('.tracardi-uix-rating-widget')
 
 widgetDivs.forEach(Div => {
     ReactDOM.render(
