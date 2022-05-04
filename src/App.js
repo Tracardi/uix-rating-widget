@@ -67,7 +67,6 @@ function App({ domElement }) {
         }).catch(error => console.log(error))
 
         const data = await response.json();
-        console.log(data);
 
         setOpen(false);
     }
