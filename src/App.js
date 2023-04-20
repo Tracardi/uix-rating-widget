@@ -3,14 +3,93 @@ import "regenerator-runtime/runtime";
 import {Box, Snackbar, SnackbarContent} from "@material-ui/core";
 import {AiFillStar} from "react-icons/ai";
 import Fade from "@material-ui/core/Fade";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
+
+const RatingWidget = ({title, message, titleSize, textColor, selectedStarColor, unselectedStarColor, descSize, starSize, onRatingSet, open}) => {
+    const [selectedStars, setStars] = React.useState(0);
+
+    return <Fade in={open} {...(open ? {timeout: 2000} : {})}>
+        <Box style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            color: textColor
+        }}>
+            {title && <div style={{fontSize: titleSize}}>{title}</div>}
+            {message && <p style={{marginTop: 1, marginBottom: 5, fontSize: descSize}}>{message}</p>}
+            <div style={{cursor: "pointer", marginTop: 10}}>
+                            <span onClick={() => onRatingSet(1)} onMouseOver={() => {
+                                setStars(1);
+                            }} onMouseLeave={() => {
+                                setStars(0);
+                            }}>
+                                    <AiFillStar style={
+                                        {
+                                            color: selectedStars > 0 ? selectedStarColor : "grey",
+                                            margin: 2
+                                        }
+                                    } size={starSize}/>
+                            </span>
+                <span onClick={() => onRatingSet(2)} onMouseOver={() => {
+                    setStars(2);
+                }} onMouseLeave={() => {
+                    setStars(0);
+                }}>
+                                    <AiFillStar style={
+                                        {
+                                            color: selectedStars > 1 ? selectedStarColor : unselectedStarColor,
+                                            margin: 2
+                                        }
+                                    } size={starSize}/>
+                                </span>
+                <span onClick={() => onRatingSet(3)} onMouseOver={() => {
+                    setStars(3);
+                }} onMouseLeave={() => {
+                    setStars(0);
+                }}>
+                                    <AiFillStar style={
+                                        {
+                                            color: selectedStars > 2 ? selectedStarColor : unselectedStarColor,
+                                            margin: 2
+                                        }
+                                    } size={starSize}/>
+                                </span>
+                <span onClick={() => onRatingSet(4)} onMouseOver={() => {
+                    setStars(4);
+                }} onMouseLeave={() => {
+                    setStars(0);
+                }}>
+                                    <AiFillStar style={
+                                        {
+                                            color: selectedStars > 3 ? selectedStarColor : unselectedStarColor,
+                                            margin: 2
+                                        }
+                                    } size={starSize}/>
+                                </span>
+                <span onClick={() => onRatingSet(5)} onMouseOver={() => {
+                    setStars(5);
+                }} onMouseLeave={() => {
+                    setStars(0);
+                }}>
+                                    <AiFillStar style={
+                                        {
+                                            color: selectedStars > 4 ? selectedStarColor : unselectedStarColor,
+                                            margin: 2
+                                        }
+                                    } size={starSize}/>
+                                </span>
+            </div>
+        </Box>
+    </Fade>
+}
 
 function App({domElement}) {
 
     const [open, setOpen] = React.useState(true);
-    const [selectedStars, setStars] = React.useState(0);
+    const [loading, setLoading] = React.useState(false);
 
-    const verticalPosition = domElement.getAttribute("data-position-vertical");
+    const verticalPosition = domElement.getAttribute("data-position-vertical") || "bottom";
     const horizontalPosition = domElement.getAttribute("data-position-horizontal");
     const title = domElement.getAttribute("data-title") || "title";
     const message = domElement.getAttribute("data-message") || "message";
@@ -28,7 +107,7 @@ function App({domElement}) {
     const unselectedStarColor = domElement.getAttribute("data-unselected-star-color") || "#ccc"
     const boxStyle = domElement.getAttribute("data-box-style") || "elevation"
     const boxPadding = domElement.getAttribute("data-box-padding") || "10px"
-    const boxElevation = domElement.getAttribute("data-box-elevation") || "5"
+    const boxElevation = parseInt(domElement.getAttribute("data-box-elevation") || "5")
     const boxBackgroundColor = domElement.getAttribute("data-box-gb-color") || "white"
     const textColor = domElement.getAttribute("data-box-text-color") || "black"
 
@@ -42,6 +121,7 @@ function App({domElement}) {
     }
 
     const sendRating = async (rating) => {
+        setLoading(true)
         try {
             await fetch(`${apiUrl}/track`, {
                 method: "POST",
@@ -81,8 +161,8 @@ function App({domElement}) {
         }
     }
 
-    return (
 
+    return (
         <Snackbar
             open={open}
             anchorOrigin={{vertical: verticalPosition, horizontal: horizontalPosition}}
@@ -101,80 +181,17 @@ function App({domElement}) {
                 }
                 elevation={boxElevation}
                 variant={boxStyle}
-                message={
-                    <Fade in={open} {...(open ? {timeout: 2000} : {})}>
-                        <Box style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            color: textColor
-                        }}>
-                            {title && <div style={{fontSize: titleSize}}>{title}</div>}
-                            {message && <p style={{marginTop: 1, marginBottom: 5, fontSize: descSize}}>{message}</p>}
-                            <div style={{cursor: "pointer", marginTop: 10}}>
-                            <span onClick={() => sendRating(1)} onMouseOver={() => {
-                                setStars(1);
-                            }} onMouseLeave={() => {
-                                setStars(0);
-                            }}>
-                                    <AiFillStar style={
-                                        {
-                                            color: selectedStars > 0 ? selectedStarColor : "grey",
-                                            margin: 2
-                                        }
-                                    } size={starSize}/>
-                            </span>
-                                <span onClick={() => sendRating(2)} onMouseOver={() => {
-                                    setStars(2);
-                                }} onMouseLeave={() => {
-                                    setStars(0);
-                                }}>
-                                    <AiFillStar style={
-                                        {
-                                            color: selectedStars > 1 ? selectedStarColor : unselectedStarColor,
-                                            margin: 2
-                                        }
-                                    } size={starSize}/>
-                                </span>
-                                <span onClick={() => sendRating(3)} onMouseOver={() => {
-                                    setStars(3);
-                                }} onMouseLeave={() => {
-                                    setStars(0);
-                                }}>
-                                    <AiFillStar style={
-                                        {
-                                            color: selectedStars > 2 ? selectedStarColor : unselectedStarColor,
-                                            margin: 2
-                                        }
-                                    } size={starSize}/>
-                                </span>
-                                <span onClick={() => sendRating(4)} onMouseOver={() => {
-                                    setStars(4);
-                                }} onMouseLeave={() => {
-                                    setStars(0);
-                                }}>
-                                    <AiFillStar style={
-                                        {
-                                            color: selectedStars > 3 ? selectedStarColor : unselectedStarColor,
-                                            margin: 2
-                                        }
-                                    } size={starSize}/>
-                                </span>
-                                <span onClick={() => sendRating(5)} onMouseOver={() => {
-                                    setStars(5);
-                                }} onMouseLeave={() => {
-                                    setStars(0);
-                                }}>
-                                    <AiFillStar style={
-                                        {
-                                            color: selectedStars > 4 ? selectedStarColor : unselectedStarColor,
-                                            margin: 2
-                                        }
-                                    } size={starSize}/>
-                                </span>
-                            </div>
-                        </Box>
-                    </Fade>
+                message={loading
+                    ? <CircularProgress />
+                : <RatingWidget title={title}
+                                titleSize={titleSize}
+                                message={message} textColor={textColor}
+                                selectedStarColor={selectedStarColor}
+                                unselectedStarColor={unselectedStarColor}
+                                descSize={descSize}
+                                starSize={starSize}
+                                open={open}
+                                onRatingSet={sendRating}/>
                 }
             />
         </Snackbar>
