@@ -28,7 +28,7 @@ function App({domElement}) {
     const unselectedStarColor = domElement.getAttribute("data-unselected-star-color") || "#ccc"
     const boxStyle = domElement.getAttribute("data-box-style") || "elevation"
     const boxPadding = domElement.getAttribute("data-box-padding") || "10px"
-    const boxElevation = domElement.getAttribute("data-box-elevation") || "1"
+    const boxElevation = domElement.getAttribute("data-box-elevation") || "5"
     const boxBackgroundColor = domElement.getAttribute("data-box-gb-color") || "white"
     const textColor = domElement.getAttribute("data-box-text-color") || "black"
 
