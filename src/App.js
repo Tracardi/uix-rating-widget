@@ -9,7 +9,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 const RatingWidget = ({title, message, titleSize, textColor, selectedStarColor, unselectedStarColor, descSize, starSize, onRatingSet, open}) => {
     const [selectedStars, setStars] = React.useState(0);
 
-    return <Fade in={open} {...(open ? {timeout: 2000} : {})}>
+    return <Fade in={open} {...(open ? {timeout: 1000} : {})}>
         <Box style={{
             display: "flex",
             flexDirection: "column",
@@ -100,16 +100,16 @@ function App({domElement}) {
     const sessionId = domElement.getAttribute("data-session-id");
     const profileId = domElement.getAttribute("data-profile-id");
     const saveEvent = domElement.getAttribute("data-save-event") === "yes";
-    const titleSize = domElement.getAttribute("data-title-size") || "22px";
-    const descSize = domElement.getAttribute("data-desc-size") || "15px";
-    const starSize = domElement.getAttribute("data-star-size") || "24px";
+    const titleSize = parseInt(domElement.getAttribute("data-title-size")) || 22;
+    const descSize = parseInt(domElement.getAttribute("data-desc-size")) || 15;
+    const starSize = parseInt(domElement.getAttribute("data-star-size")) || 24;
     const selectedStarColor = domElement.getAttribute("data-selected-star-color") || "#ffd700"
     const unselectedStarColor = domElement.getAttribute("data-unselected-star-color") || "#ccc"
     const boxStyle = domElement.getAttribute("data-box-style") || "elevation"
-    const boxPadding = domElement.getAttribute("data-box-padding") || "10px"
+    const boxPadding = domElement.getAttribute("data-box-padding") || "20px"
     const boxElevation = parseInt(domElement.getAttribute("data-box-elevation") || "5")
     const boxBackgroundColor = domElement.getAttribute("data-box-gb-color") || "white"
-    const textColor = domElement.getAttribute("data-box-text-color") || "black"
+    const textColor = domElement.getAttribute("data-box-text-color") || "#444"
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
