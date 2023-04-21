@@ -1,9 +1,12 @@
 import React from 'react';
 import "regenerator-runtime/runtime";
-import {Box, Snackbar, SnackbarContent} from "@material-ui/core";
 import {AiFillStar} from "react-icons/ai";
-import Fade from "@material-ui/core/Fade";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Fade from "@mui/material/Fade";
+import Box from "@mui/material/Box";
+import Snackbar from "@mui/material/Snackbar";
+import SnackbarContent from "@mui/material/SnackbarContent";
+import CircularProgress from "@mui/material/CircularProgress";
+
 
 
 const RatingWidget = ({title, message, titleSize, textColor, selectedStarColor, unselectedStarColor, descSize, starSize, onRatingSet, open}) => {
