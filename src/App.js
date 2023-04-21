@@ -106,10 +106,16 @@ function App({domElement}) {
     const selectedStarColor = domElement.getAttribute("data-selected-star-color") || "#ffd700"
     const unselectedStarColor = domElement.getAttribute("data-unselected-star-color") || "#ccc"
     const boxStyle = domElement.getAttribute("data-box-style") || "elevation"
-    const boxPadding = domElement.getAttribute("data-box-padding") || "20px"
-    const boxElevation = parseInt(domElement.getAttribute("data-box-elevation") || "5")
-    const boxBackgroundColor = domElement.getAttribute("data-box-gb-color") || "white"
+    const boxPaddingLeft = parseInt(domElement.getAttribute("data-box-padding-left")) || 0
+    const boxPaddingRight = parseInt(domElement.getAttribute("data-box-padding-right")) || 0
+    const boxPaddingTop = parseInt(domElement.getAttribute("data-box-padding-top")) || 20
+    const boxPaddingBottom = parseInt(domElement.getAttribute("data-box-padding-bottom")) || 20
+    const boxElevation = parseInt(domElement.getAttribute("data-box-elevation")) || 5
+    const boxBackgroundColor = domElement.getAttribute("data-box-gb-color") || "#fff"
     const textColor = domElement.getAttribute("data-box-text-color") || "#444"
+    const borderSize = parseInt(domElement.getAttribute("data-box-border-size")) || 0
+    const borderRadius = parseInt(domElement.getAttribute("data-box-border-radius")) || 14
+
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -161,6 +167,24 @@ function App({domElement}) {
         }
     }
 
+    let style = {
+        backgroundColor: boxBackgroundColor,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        paddingLeft: boxPaddingLeft,
+        paddingRight: boxPaddingRight,
+        paddingTop: boxPaddingTop,
+        paddingBottom: boxPaddingBottom,
+        borderRadius: borderRadius,
+        borderWidth: borderSize,
+        borderColor: "white",
+
+    }
+
+    if(borderSize >0) {
+        style = {...style, borderStyle: "solid"}
+    }
 
     return (
         <Snackbar
@@ -170,15 +194,7 @@ function App({domElement}) {
             autoHideDuration={autoHide}
         >
             <SnackbarContent
-                style={
-                    {
-                        backgroundColor: boxBackgroundColor,
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        padding: boxPadding
-                    }
-                }
+                style={style}
                 elevation={boxElevation}
                 variant={boxStyle}
                 message={loading
