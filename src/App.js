@@ -93,7 +93,7 @@ function App({domElement}) {
     const [loading, setLoading] = React.useState(false);
 
     const verticalPosition = domElement.getAttribute("data-position-vertical") || "bottom";
-    const horizontalPosition = domElement.getAttribute("data-position-horizontal");
+    const horizontalPosition = domElement.getAttribute("data-position-horizontal") || "right";
     const title = domElement.getAttribute("data-title") || "title";
     const message = domElement.getAttribute("data-message") || "message";
     const eventType = domElement.getAttribute("data-event-type") || "rating";
