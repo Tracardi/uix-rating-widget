@@ -99,7 +99,7 @@ function App({domElement}) {
     const sourceId = domElement.getAttribute("data-source-id");
     const sessionId = domElement.getAttribute("data-session-id");
     const profileId = domElement.getAttribute("data-profile-id");
-    const saveEvent = domElement.getAttribute("data-save-event") === "yes";
+    const saveEvent = domElement.getAttribute("data-save-event") || "true";
     const titleSize = parseInt(domElement.getAttribute("data-title-size")) || 22;
     const descSize = parseInt(domElement.getAttribute("data-desc-size")) || 15;
     const starSize = parseInt(domElement.getAttribute("data-star-size")) || 24;
@@ -153,7 +153,7 @@ function App({domElement}) {
                                 "rating": rating
                             },
                             "options": {
-                                "saveEvent": saveEvent
+                                "saveEvent": saveEvent === "true"
                             }
                         }
                     ],
@@ -168,7 +168,7 @@ function App({domElement}) {
     }
 
     let style = {
-        backgroundColor: boxBackgroundColor,
+        background: boxBackgroundColor,
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
@@ -181,7 +181,7 @@ function App({domElement}) {
         borderColor: "white",
 
     }
-
+    console.log(style)
     if(borderSize >0) {
         style = {...style, borderStyle: "solid"}
     }
